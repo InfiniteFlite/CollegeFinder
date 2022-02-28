@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% set active_page = "home" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <!--page content-->
+    <div id="demo" class="carousel slide" data-ride="carousel">
+
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+    <li data-target="#demo" data-slide-to="3"></li>
+  </ul>
+
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../static/images/college1.jpg" alt="College One" width="100%" height="900">
+    </div>
+    <div class="carousel-item">
+      <img src="../static/images/college2.jpg" alt="College Two" width="100%" height="900">
+    </div>
+    <div class="carousel-item">
+      <img src="../static/images/college3.jpg" alt="College Three" width="100%" height="900">
+    </div>
+    <div class="carousel-item">
+      <img src="../static/images/college4.jpg" alt="College Four" width="100%" height="900">
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+    </div>
+    <h1 class="text-center"> Find the College of your dreams </h1>
+    <div class="d-flex justify-content-center">
+    <h4 class="text-center" id="mainPageInfo">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce molestie magna urna. Donec ornare lectus in lacinia efficitur. Nulla in risus ut magna facilisis tempor. Cras dignissim elementum sem ac tristique. Sed sapien eros, ullamcorper pellentesque purus ut, tincidunt commodo enim. Ut et lacinia dolor. Proin vitae augue sagittis, condimentum turpis ac, aliquet nisi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce molestie magna urna. Donec ornare lectus in lacinia efficitur.</h4>
+    </div>
+    <div class="d-flex justify-content-center">
+    <a href="/form"
+    <button type="button" class="btn btn-primary btn-lg">Find my college!</button>
+    </a>
+    <div>
+{% endblock %}

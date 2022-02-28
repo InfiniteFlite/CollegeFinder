@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% set active_page = "form" %}
+
+{% block title %}Form{% endblock %}
+
+{% block content %}
+    <!--page content-->
+    <h1 class="text-center">Fill out the fields below to find out what colleges you can get in to</h1>
+
+    <form action="/results">
+        <div class="form-group">
+      <label for="email">Name</label>
+      <input type="name" class="form-control" id="name" name="name">
+    </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}
