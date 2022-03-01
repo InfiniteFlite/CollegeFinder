@@ -8,10 +8,44 @@
     <!--page content-->
     <h1 class="text-center">Fill out the fields below to find out what colleges you can get in to</h1>
 
-    <form action="/results">
-        <div class="form-group">
+    <form action="/results" class=".needs-validation">
+    <div class="form-group">
       <label for="email">Name</label>
-      <input type="name" class="form-control" id="name" name="name">
+      <input type="name" class="form-control" placeholder="Enter Name"id="name" name="uname" required>
+      <div class="invalid-feedback">Please fill out this field</div>
+    </div>
+    <div class="form-group">
+      <label for="Grade">Grade</label>
+      <input type="number" class="form-control" placeholder="Enter Grade" id="grade" name="ugrade" required>
+      <div class="invalid-feedback">Please fill out this field</div>
+    </div>
+    <div class="form-group">
+      <label for="GPA">High School GPA(Weighted)</label>
+      <input type="number" step=".1" class="form-control" placeholder="Enter GPA" id="GPA" name="uGPA" required>
+      <div class="invalid-feedback">Please fill out this field</div>
+    </div>
+    <div class="form-group">
+      <label for="APtaken">How many AP classes have you taken</label>
+      <input type="number" class="form-control" placeholder="Enter Number of Classes" id="APtaken" name="uAPTaken" required>
+      <div class="invalid-feedback">Please fill out this field</div>
+    </div>
+    <div class="form-group">
+      <label for="APtaken">How many AP tests have you gotten at least a 3 on</label>
+      <input type="number" class="form-control" placeholder="Enter Number of 3+" id="APpassed" name="uAPpassed" required>
+      <div class="invalid-feedback">Please fill out this field</div>
+    </div>
+    <div class="form-group">
+      <label for="volunteer">How many volunteering hours have you completed</label>
+      <input type="number" class="form-control" placeholder="Enter Number of hours" id="vHours" name="uvHours" required>
+      <div class="invalid-feedback">Please fill out this field</div>
+    </div>
+    <div class="form-group">
+      <label for="ASB">Did you participate in any clubs or ASB?</label><br>
+      <input type="radio" id="yesASB" name="ASB" value="Yes">
+      <label for="Yes">Yes</label><br>
+      <input type="radio" id="noASB" name="ASB" value="No">
+      <label for="No">No</label><br>
+      <div class="invalid-feedback">Please fill out this field</div>
     </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
