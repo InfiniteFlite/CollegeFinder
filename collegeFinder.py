@@ -1,18 +1,51 @@
 from flask import Flask, url_for, render_template, request
 import math
+from math import e
 
 app = Flask(__name__) #__name__ = "__main__" if this is the file that was run.  Otherwise, it is the name of the file (ex. webapp)
+
+colleges = {
+"Stanford" : 95,
+"Yale": 93,
+"UCLA": 93,
+"MIT" : 91,
+"Princeton": 97,
+"Harvard": 95,
+"Emory": 89,
+"Berkely": 89
+}
 
 def get_gpa_index(GPA):
     if GPA == 5:
         return 0
     else:
-        index = 5/((GPA**2)+0.3)
-        return index
+        return (190*e**GPA)/(e**(2*GPA)+1)+5
 
-def get_vonunteer_index(hours):
-    index = .2*(-hours + 100)
-    return index
+def get_volunteer_index(hours):
+    if hours <= 100:
+        return .25*(-hours + 100)
+    else:
+        return -1*(hours-100)**(1/3)
+
+def get_asb_index(asb):
+    if asb == "Yes":
+        return 0
+    if asb == "No":
+        return 15
+
+def get_ap_index(p, t):
+    diff = 5*(t - p)
+    if t < 3:
+        diff+=20
+    elif t >= 3 and t < 6:
+        diff+=10
+    return diff
+
+def college_index(gpa, pTaken, pPassed, vHours, ASB):
+    return math.floor(100-get_gpa_index(gpa)-get_volunteer_index(vHours)-get_asb_index(ASB)-get_ap_index(pPassed, pTaken))
+
+def get_colleges(cIndex):
+
 
 @app.route("/")
 def render_main():
@@ -30,9 +63,14 @@ def render_results():
     vHours = int(request.args['uvHours'])
     ASB = request.args['ASB']
 
-    collegeIndex = 100-((pTaken-pPassed)*6)-((8-pTaken)*2)-get_gpa_index(gpa)-get_vonunteer_index(vHours)
+    cinDex = college_index(gpa,pTaken, pPassed, vHours, ASB)
+    get_colleges(cinDex)
 
-    return render_template('results.html', index = collegeIndex)
+    print("GPA Index = " + str(get_gpa_index(gpa)))
+    print("Volunteer Index = " + str(get_volunteer_index(vHours)))
+    print("ASB Index = " + str(get_asb_index(ASB)))
+    print("AP Index = " + str(get_ap_index(pPassed, pTaken)))
+    return render_template('results.html', index = cinDex)
 
 if __name__=="__main__":
     app.run(debug=True)
