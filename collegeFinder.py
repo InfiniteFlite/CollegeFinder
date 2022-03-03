@@ -12,7 +12,48 @@ colleges = {
 "Princeton": 97,
 "Harvard": 95,
 "Emory": 89,
-"Berkely": 89
+"Berkely": 89,
+"UCSD": 84,
+"University of Virginia": 83,
+"Georgia Tech": 80,
+"UC Davis": 77,
+"Tulane": 82,
+"Gonzaga": 75,
+"TCU": 70,
+"Temple": 69,
+"RIT": 70,
+"Seton Hall": 67,
+"George Mason": 64,
+"University of Idaho": 61,
+"University of New Mexico": 58,
+"Pace": 54,
+"Gannon": 51,
+"Harding": 50,
+"Montana State": 48,
+"Florida Atlantic": 46,
+"South Dakota State University": 42,
+"Husson": 40,
+"Kieser": 40,
+"Oakland University": 37,
+"Tennessee State": 36,
+"University of Alaska": 35,
+"University of Toledo": 34,
+"Wingate University": 31,
+"Brandman University": 30,
+"Valdosta": 28,
+"Western Kentucky University": 26,
+"William Woods": 25,
+"University of the Cumberlands": 23,
+"Wichita State": 21,
+"William Carey": 20,
+"University of Southern Mississippi": 18,
+"Jackson State": 16,
+"Grand Canyon University": 15,
+"Ferris State": 13,
+"Lindenwood": 11,
+"Missouri State": 10,
+"Morgan State": 7,
+"SBCC": 0
 }
 
 def get_gpa_index(GPA):
@@ -34,7 +75,9 @@ def get_asb_index(asb):
         return 15
 
 def get_ap_index(p, t):
+    print(p)
     diff = 5*(t - p)
+    print(diff)
     if t < 3:
         diff+=20
     elif t >= 3 and t < 6:
@@ -42,10 +85,20 @@ def get_ap_index(p, t):
     return diff
 
 def college_index(gpa, pTaken, pPassed, vHours, ASB):
-    return math.floor(100-get_gpa_index(gpa)-get_volunteer_index(vHours)-get_asb_index(ASB)-get_ap_index(pPassed, pTaken))
+    index = math.floor(100-get_gpa_index(gpa)-get_volunteer_index(vHours)-get_asb_index(ASB)-get_ap_index(pPassed, pTaken))
+    if index > 100:
+        index = 100
+    elif index < 0:
+        index = 0
+    return index
 
 def get_colleges(cIndex):
+    collegesIn = []
+    for item in colleges.values():
+        if cIndex > item:
+            collegesIn.push(colleges.keys(item))
 
+    return collegesIn
 
 @app.route("/")
 def render_main():
@@ -66,11 +119,7 @@ def render_results():
     cinDex = college_index(gpa,pTaken, pPassed, vHours, ASB)
     get_colleges(cinDex)
 
-    print("GPA Index = " + str(get_gpa_index(gpa)))
-    print("Volunteer Index = " + str(get_volunteer_index(vHours)))
-    print("ASB Index = " + str(get_asb_index(ASB)))
-    print("AP Index = " + str(get_ap_index(pPassed, pTaken)))
-    return render_template('results.html', index = cinDex)
+    return render_template('results.html', index = cinDex, colleges = get_colleges(cinDex))
 
 if __name__=="__main__":
     app.run(debug=True)
