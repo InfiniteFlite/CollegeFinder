@@ -93,12 +93,19 @@ def college_index(gpa, pTaken, pPassed, vHours, ASB):
     return index
 
 def get_colleges(cIndex):
+    global collegesIn
     collegesIn = []
-    for item in colleges.values():
-        if cIndex > item:
-            collegesIn.push(colleges.keys(item))
+    keyList = list(colleges.keys())
+    valueList = list(colleges.values())
+    for x in range(len(colleges)):
+        if len(collegesIn) == 5:
+            return collegesIn
+        if cIndex >= valueList[x]:
+            collegesIn.append(keyList[x])
 
-    return collegesIn
+
+def get_widths(num, cinDex):
+    return ((colleges[collegesIn[num]])/cinDex)*100
 
 @app.route("/")
 def render_main():
@@ -117,9 +124,9 @@ def render_results():
     ASB = request.args['ASB']
 
     cinDex = college_index(gpa,pTaken, pPassed, vHours, ASB)
-    get_colleges(cinDex)
+    c = get_colleges(cinDex)
 
-    return render_template('results.html', index = cinDex, colleges = get_colleges(cinDex))
+    return render_template('results.html', index = cinDex, colleges = c, width1 = get_widths(0, cinDex), width2 = get_widths(1, cinDex), width3 = get_widths(2, cinDex), width4 = get_widths(3, cinDex), width5 = get_widths(4, cinDex))
 
 if __name__=="__main__":
     app.run(debug=True)
