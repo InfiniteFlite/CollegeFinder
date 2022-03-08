@@ -56,6 +56,58 @@ colleges = {
 "SBCC": 0
 }
 
+collegeLinks = {
+"Stanford" : "https://www.usnews.com/best-colleges/stanford-university-1305",
+"Yale": "https://www.usnews.com/best-colleges/yale-university-1426",
+"UCLA": "https://www.usnews.com/best-colleges/university-of-california-los-angeles-1315",
+"MIT" : "https://www.usnews.com/best-colleges/massachusetts-institute-of-technology-2178",
+"Princeton": "https://www.usnews.com/best-colleges/princeton-university-2627",
+"Harvard": "https://www.usnews.com/best-colleges/harvard-university-2155",
+"Emory": "https://www.usnews.com/best-colleges/emory-university-1564",
+"Berkely": "https://www.usnews.com/best-colleges/university-of-california-berkeley-1312",
+"UCSD": "https://www.usnews.com/best-colleges/university-of-california-san-diego-1317",
+"University of Virginia": "https://www.usnews.com/best-colleges/uva-6968",
+"Georgia Tech": "https://www.usnews.com/best-colleges/georgia-institute-of-technology-1569",
+"UC Davis": "https://www.usnews.com/best-colleges/university-of-california-davis-1313",
+"Tulane": "https://www.usnews.com/best-colleges/tulane-university-2029",
+"Gonzaga": "https://www.usnews.com/best-colleges/gonzaga-university-3778",
+"TCU": "https://www.usnews.com/best-colleges/tcu-3636",
+"Temple": "https://www.usnews.com/education/online-education/temple-university-216339",
+"RIT": "https://www.usnews.com/best-colleges/rit-2806",
+"Seton Hall": "https://www.usnews.com/best-colleges/seton-hall-university-new-jersey-2632",
+"George Mason": "https://www.usnews.com/best-colleges/gmu-3749",
+"University of Idaho": "https://www.usnews.com/best-colleges/university-of-idaho-1626",
+"University of New Mexico": "https://www.usnews.com/best-colleges/university-of-new-mexico-10313",
+"Pace": "https://www.usnews.com/best-colleges/pace-university-2791",
+"Gannon": "https://www.usnews.com/best-colleges/gannon-university-3266",
+"Harding": "https://www.usnews.com/best-colleges/harding-university-10311",
+"Montana State": "https://www.usnews.com/best-colleges/montana-state-billings-2530",
+"Florida Atlantic": "https://www.usnews.com/best-colleges/florida-atlantic-university-1481",
+"South Dakota State University": "https://www.usnews.com/best-colleges/south-dakota-state-3471",
+"Husson": "https://www.usnews.com/best-colleges/husson-university-2043/applying",
+"Kieser": "https://www.usnews.com/best-colleges/keiser-university-21519/overall-rankings",
+"Oakland University": "https://www.usnews.com/best-colleges/oakland-university-2307",
+"Tennessee State": "https://www.usnews.com/best-colleges/tennessee-state-3522",
+"University of Alaska": "https://www.usnews.com/best-colleges/university-of-alaska-fairbanks-1063",
+"University of Toledo": "https://www.usnews.com/best-colleges/university-of-toledo-3131",
+"Wingate University": "https://www.usnews.com/best-colleges/wingate-university-2985",
+"Brandman University": "https://www.usnews.com/best-colleges/brandman-university-262086",
+"Valdosta": "https://www.usnews.com/best-colleges/valdosta-state-university-1599",
+"Western Kentucky University": "https://www.usnews.com/best-colleges/western-kentucky-university-2002",
+"William Woods": "https://www.usnews.com/best-colleges/william-woods-university-2525",
+"University of the Cumberlands": "https://www.usnews.com/best-colleges/university-of-the-cumberlands-1962",
+"Wichita State": "https://www.usnews.com/best-colleges/wichita-state-university-1950",
+"William Carey": "https://www.usnews.com/best-colleges/william-carey-university-2447",
+"University of Southern Mississippi": "https://www.usnews.com/best-colleges/university-of-southern-mississippi-2441",
+"Jackson State": "https://www.usnews.com/best-colleges/jackson-state-2410",
+"Grand Canyon University": "https://www.usnews.com/best-colleges/grand-canyon-university-1074",
+"Ferris State": "https://www.usnews.com/best-colleges/ferris-state-university-2260",
+"Lindenwood": "https://www.usnews.com/best-colleges/lindenwood-2480",
+"Missouri State": "https://www.usnews.com/best-colleges/southeast-missouri-state-2501",
+"Morgan State": "https://www.usnews.com/best-colleges/morgan-state-2083",
+"SBCC": "https://www.usnews.com/education/community-colleges/santa-barbara-city-college-CC07599"
+}
+
 def get_gpa_index(GPA):
     if GPA == 5:
         return 0
@@ -104,8 +156,15 @@ def get_colleges(cIndex):
             collegesIn.append(keyList[x])
 
 
-def get_widths(num, cinDex):
-    return ((colleges[collegesIn[num]])/cinDex)*100
+def get_widths(num):
+    num = 4-num
+    w = math.floor(((colleges[collegesIn[num]])/cinDex)*100)
+    if w >=100:
+        w=99
+    return w
+
+def send_results(width, cNum, num, w):
+    return "Your " + cNum + " school is " + collegesIn[num] + "! You are " + str(w) + "% likely to get in."
 
 @app.route("/")
 def render_main():
@@ -123,10 +182,16 @@ def render_results():
     vHours = int(request.args['uvHours'])
     ASB = request.args['ASB']
 
+    global cinDex
     cinDex = college_index(gpa,pTaken, pPassed, vHours, ASB)
     c = get_colleges(cinDex)
+    w1 = get_widths(0)
+    w2 = get_widths(1)
+    w3 = get_widths(2)
+    w4 = get_widths(3)
+    w5 = get_widths(4)
 
-    return render_template('results.html', index = cinDex, colleges = c, width1 = get_widths(0, cinDex), width2 = get_widths(1, cinDex), width3 = get_widths(2, cinDex), width4 = get_widths(3, cinDex), width5 = get_widths(4, cinDex))
+    return render_template('results.html', index = cinDex, colleges = c, width1 = w1, width2 = w2, width3 = w3, width4 = w4, width5 = w5, collegeTop = send_results(w1, "top", 0, w1), collegeSecond = send_results(w2, "second", 1, w2), collegeThird = send_results(w3, "third", 2, w3), collegeFourth = send_results(w4, "fourth", 3, w4), collegeFifth = send_results(w5, "fifth", 4, w5), link1 = collegeLinks[collegesIn[0]], link2 = collegeLinks[collegesIn[1]], link3 = collegeLinks[collegesIn[2]], link4 = collegeLinks[collegesIn[3]], link5 = collegeLinks[collegesIn[4]])
 
 if __name__=="__main__":
     app.run(debug=True)
