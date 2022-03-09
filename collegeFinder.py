@@ -127,9 +127,7 @@ def get_asb_index(asb):
         return 15
 
 def get_ap_index(p, t):
-    print(p)
     diff = 5*(t - p)
-    print(diff)
     if t < 3:
         diff+=20
     elif t >= 3 and t < 6:
