@@ -140,8 +140,8 @@ def college_index(gpa, pTaken, pPassed, vHours, ASB):
     index = math.floor(100-get_gpa_index(gpa)-get_volunteer_index(vHours)-get_asb_index(ASB)-get_ap_index(pPassed, pTaken))
     if index > 100:
         index = 100
-    elif index < 0:
-        index = 0
+    elif index < 13:
+        index = 13
     return index
 
 def get_colleges(cIndex):
@@ -191,7 +191,7 @@ def render_results():
     w4 = get_widths(3)
     w5 = get_widths(4)
 
-    return render_template('results.html', index = cinDex, colleges = c, width1 = w1, width2 = w2, width3 = w3, width4 = w4, width5 = w5, collegeTop = send_results(w1, "top", 0, w1), collegeSecond = send_results(w2, "second", 1, w2), collegeThird = send_results(w3, "third", 2, w3), collegeFourth = send_results(w4, "fourth", 3, w4), collegeFifth = send_results(w5, "fifth", 4, w5), link1 = collegeLinks[collegesIn[0]], link2 = collegeLinks[collegesIn[1]], link3 = collegeLinks[collegesIn[2]], link4 = collegeLinks[collegesIn[3]], link5 = collegeLinks[collegesIn[4]])
+    return render_template('results.html', width1 = w1, width2 = w2, width3 = w3, width4 = w4, width5 = w5, collegeTop = send_results(w1, "top", 0, w1), collegeSecond = send_results(w2, "second", 1, w2), collegeThird = send_results(w3, "third", 2, w3), collegeFourth = send_results(w4, "fourth", 3, w4), collegeFifth = send_results(w5, "fifth", 4, w5), link1 = collegeLinks[collegesIn[0]], link2 = collegeLinks[collegesIn[1]], link3 = collegeLinks[collegesIn[2]], link4 = collegeLinks[collegesIn[3]], link5 = collegeLinks[collegesIn[4]], img1 = collegesIn[0], img2 = collegesIn[1], img3 = collegesIn[2], img4 = collegesIn[3], img5 = collegesIn[4])
 
 if __name__=="__main__":
     app.run(debug=True)
