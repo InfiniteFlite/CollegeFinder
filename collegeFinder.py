@@ -84,8 +84,8 @@ collegeLinks = {
 "Montana State": "https://www.usnews.com/best-colleges/montana-state-billings-2530",
 "Florida Atlantic": "https://www.usnews.com/best-colleges/florida-atlantic-university-1481",
 "South Dakota State University": "https://www.usnews.com/best-colleges/south-dakota-state-3471",
-"Husson": "https://www.usnews.com/best-colleges/husson-university-2043/applying",
-"Kieser": "https://www.usnews.com/best-colleges/keiser-university-21519/overall-rankings",
+"Husson": "https://www.usnews.com/best-colleges/husson-university-2043",
+"Kieser": "https://www.usnews.com/best-colleges/keiser-university-21519",
 "Oakland University": "https://www.usnews.com/best-colleges/oakland-university-2307",
 "Tennessee State": "https://www.usnews.com/best-colleges/tennessee-state-3522",
 "University of Alaska": "https://www.usnews.com/best-colleges/university-of-alaska-fairbanks-1063",
@@ -179,6 +179,10 @@ def render_results():
     pPassed = int(request.args['uAPpassed'])
     vHours = int(request.args['uvHours'])
     ASB = request.args['ASB']
+
+    if gpa > 5 or gpa < 0:
+        render_form()
+
 
     global cinDex
     cinDex = college_index(gpa,pTaken, pPassed, vHours, ASB)

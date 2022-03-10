@@ -4,6 +4,56 @@
     overflow-wrap:normal;
 }
 
+
 #FMCButton{
     margin-bottom:2%
 }
+
+.form-group{
+    width:270%
+}
+
+.mainForm{
+    float:left
+}
+
+#formRatingsDiv{
+    float:right;
+    width:47%;
+    height:90vh;
+    margin-left:2%;
+    margin-right:.5%;
+    margin-top: 1%;
+    margin-bottom:0%;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+#formRatingsDiv::-webkit-scrollbar{
+    display:none
+}
+
+.ratings {
+     background-color: #fff;
+     padding: 54px;
+     border: 1px solid rgba(0, 0, 0, 0.1);
+     box-shadow: 0px 10px 10px #E0E0E0;
+ }
+
+ .ratingsNT{
+          margin-top:5%
+ }
+
+ .product-rating {
+     font-size: 50px
+ }
+
+ .stars i {
+     font-size: 18px;
+     color: #28a745
+ }
+
+ .rating-text {
+     margin-top: 10px
+ }
