@@ -7,7 +7,7 @@
 {% block content %}
     <!--page content-->
     <h1 class="text-center">Fill out the fields below to find out what colleges you can get in to</h1>
-
+    <div id="form">
     <form action="/results" class=".needs-validation mainForm">
     <div class="form-group">
       <label for="name">Name</label>
@@ -45,8 +45,17 @@
       <label for="No">No</label><br>
       <div class="invalid-feedback">Please fill out this field</div>
     </div>
+    <div class="form-group">
+      <label for="Stretch">Do you want to find stretch schools or safety schools?</label><br>
+      <input type="radio" id="Stretch" name="stretch" value="stretch" required>
+      <label for="Stretch">Stretch</label><br>
+      <input type="radio" id="Safety" name="stretch" value="safety" required>
+      <label for="Safety">Safety</label><br>
+      <div class="invalid-feedback">Please fill out this field</div>
+    </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    </div>
     <div id="formRatingsDiv">
         <div class="content text-center">
         <div class="ratings"> <span class="product-rating">4.6</span><span>/5</span>

@@ -136,6 +136,8 @@ def get_ap_index(p, t):
 
 def college_index(gpa, pTaken, pPassed, vHours, ASB):
     index = math.floor(100-get_gpa_index(gpa)-get_volunteer_index(vHours)-get_asb_index(ASB)-get_ap_index(pPassed, pTaken))
+    if isStretch == "stretch":
+        index+=15
     if index > 100:
         index = 100
     elif index < 13:
@@ -156,13 +158,22 @@ def get_colleges(cIndex):
 
 def get_widths(num):
     num = 4-num
-    w = math.floor(((colleges[collegesIn[num]])/cinDex)*100)
+    if isStretch == "stretch":
+        w = math.floor(((colleges[collegesIn[num]])/(cinDex+30))*100)
+    else:
+        w = math.floor(((colleges[collegesIn[num]])/(cinDex))*100)
     if w >=100:
         w=99
     return w
 
 def send_results(width, cNum, num, w):
-    return "Your " + cNum + " school is " + collegesIn[num] + "! You are " + str(w) + "% likely to get in."
+    return "Your " + cNum + " " + isStretch + " school is " + collegesIn[num] + "! You are " + str(w) + "% likely to get in."
+
+def process_name(name):
+    if name == "":
+        return " "
+    else:
+        return "Hello " + name + "! Here are your top five most likely to get into:"
 
 @app.route("/")
 def render_main():
@@ -174,14 +185,14 @@ def render_form():
 
 @app.route("/results")
 def render_results():
+    global isStretch
     gpa = float(request.args['uGPA'])
     pTaken = int(request.args['uAPTaken'])
     pPassed = int(request.args['uAPpassed'])
     vHours = int(request.args['uvHours'])
     ASB = request.args['ASB']
-
-    if gpa > 5 or gpa < 0:
-        render_form()
+    name = request.args['uname']
+    isStretch = request.args['stretch']
 
 
     global cinDex
@@ -193,7 +204,7 @@ def render_results():
     w4 = get_widths(3)
     w5 = get_widths(4)
 
-    return render_template('results.html', width1 = w1, width2 = w2, width3 = w3, width4 = w4, width5 = w5, collegeTop = send_results(w1, "top", 0, w1), collegeSecond = send_results(w2, "second", 1, w2), collegeThird = send_results(w3, "third", 2, w3), collegeFourth = send_results(w4, "fourth", 3, w4), collegeFifth = send_results(w5, "fifth", 4, w5), link1 = collegeLinks[collegesIn[0]], link2 = collegeLinks[collegesIn[1]], link3 = collegeLinks[collegesIn[2]], link4 = collegeLinks[collegesIn[3]], link5 = collegeLinks[collegesIn[4]], img1 = collegesIn[0], img2 = collegesIn[1], img3 = collegesIn[2], img4 = collegesIn[3], img5 = collegesIn[4])
+    return render_template('results.html', width1 = w1, width2 = w2, width3 = w3, width4 = w4, width5 = w5, collegeTop = send_results(w1, "top", 0, w1), collegeSecond = send_results(w2, "second", 1, w2), collegeThird = send_results(w3, "third", 2, w3), collegeFourth = send_results(w4, "fourth", 3, w4), collegeFifth = send_results(w5, "fifth", 4, w5), link1 = collegeLinks[collegesIn[0]], link2 = collegeLinks[collegesIn[1]], link3 = collegeLinks[collegesIn[2]], link4 = collegeLinks[collegesIn[3]], link5 = collegeLinks[collegesIn[4]], img1 = collegesIn[0], img2 = collegesIn[1], img3 = collegesIn[2], img4 = collegesIn[3], img5 = collegesIn[4], rName = process_name(name))
 
 if __name__=="__main__":
     app.run(debug=True)

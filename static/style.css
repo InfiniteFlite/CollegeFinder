@@ -9,12 +9,10 @@
     margin-bottom:2%
 }
 
-.form-group{
-    width:270%
-}
-
-.mainForm{
-    float:left
+#form{
+    float:left;
+    width:49%;
+    margin-left: 1%;
 }
 
 #formRatingsDiv{
