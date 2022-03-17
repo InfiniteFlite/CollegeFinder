@@ -2,19 +2,19 @@ $(document).ready(function() {
     processSubmit();
 });
 
-processSubmit(){
+function processSubmit(){
     $(".mainForm").submit(function(e){
-
+        var formId = this.id,
+        form = this;
         passed = document.getElementById("APpassed");
         taken = document.getElementById("APtaken");
-        if(parseInt(passed.value()) > parseInt(taken.value()))
+        if(document.getElementById("APpassed").value > document.getElementById("APtaken").value)
         {
             alert("You cannot have passed more AP Classes than you took!");
+            e.preventDefault(e);
         }
-        //else {
-        //    console.log("Hi");
-        //    $("#form").submit();
-        //}
-    return false
+        else {
+           form.submit();
+            }
     });
 }
